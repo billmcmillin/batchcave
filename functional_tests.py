@@ -14,7 +14,7 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get('http://localhost:8000')
 
         #User is presented with basic info about the app
-        self.assertIn('Batchcave', self.browser.title)
+        self.assertIn('BatchCave', self.browser.title)
         self.fail('Finish the test!')
 
         #User is presented with a list of processes to choose from
