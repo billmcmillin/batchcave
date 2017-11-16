@@ -13,6 +13,9 @@ Functional tests in functional_tests.py
 start server with ```sudo docker-compose up```
 run with ```python3 functional_tests.py```
 
+## Migrations
+```python3 batchcave/manage.py makemigrations```
+
 ## Running
 From project root:
 ```docker-compose up```
