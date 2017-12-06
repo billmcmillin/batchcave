@@ -12,7 +12,7 @@ class HomePageTest(TestCase):
         self.assertIn('<title>BatchCave</title>', html)
         self.assertTrue(html.strip().endswith('</html>'))
 
-        self.assertTemplateUsed(response, 'home.html')
+        self.assertTemplateUsed(response, 'converter/home.html')
 
 class ConversionModelTest(TestCase):
 
@@ -32,3 +32,18 @@ class ConversionModelTest(TestCase):
         second_saved_item = saved_items[1]
         self.assertEqual(first_saved_item.Name, 'First process run')
         self.assertEqual(second_saved_item.Name, 'Second process run')
+
+class NewConversionTest(TestCase):
+
+    def test_can_save_new_conversion(self):
+        response = self.client.post('/conversions/create/', data={'Name': 'First one','Type': 'ER_EAI_2nd'})
+        self.assertEqual(Conversion.objects.count(), 1)
+        new_item = Conversion.objects.first()
+        self.assertEqual(new_item.Type, 'ER_EAI_2nd')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], 'conversions')
+
+    def test_only_saves_when_necessary(self):
+        self.client.get('/conversions/create')
+        self.assertEqual(Conversion.objects.count(), 0)

@@ -17,14 +17,5 @@ from django.conf.urls import url
 from converter import views
 
 urlpatterns = [
-    # home page
     url(r'^$', views.home_page, name='home'),
-    # ex: /conversions/
-    url(r'^conversions/$', views.index, name='index'),
-    # ex: /conversions/create
-     url(r'^conversions/create/$', views.create, name='create'),
-    # ex: /conversions/5/
-    url(r'^conversions/(?P<conversion_id>[0-9]+)/$', views.detail, name='detail'),
-    # ex: /conversions/5/results/
-    url(r'^conversions/(?P<conversion_id>[0-9]+)/results/$', views.results, name='results'),
 ]

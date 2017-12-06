@@ -20,5 +20,9 @@ run with ```python3 functional_tests.py```
 From project root:
 ```docker-compose up```
 
+## SSH into container
+* docker attach won't work b/c start_app.sh is running the server. Instead, use
+```sudo docker exec -it batchcave_app_1 bash```
+
 ## Sources
 * [https://docs.docker.com/compose/django/](https://docs.docker.com/compose/django/)

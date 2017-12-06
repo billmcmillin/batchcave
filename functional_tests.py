@@ -32,20 +32,24 @@ class NewVisitorTest(unittest.TestCase):
 
         #User selects a process
     def test_user_can_select_process(self):
-        self.browser.get('http://localhost:8000')
-        choice1 = self.browser.find_element_by_id('id_ER_EAI_2nd')
-        choice1.click()
+        self.browser.get('http://localhost:8000/conversions/create')
 
         #User is taken to the process window
 
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('Begin New Conversion', header_text)
 
-#User is able to upload a file through dialog box
+        #User can select a process
+        process_link = self.browser.find_element_by_tag_name('option').text
+        self.assertIn('ER_EAI_2nd', process_link)
 
-#File is processed and downloads through user's browser
+        #User is able to upload a file through dialog box
 
-#User is prompted to perform the same process again or return to main menu
+        #File is processed and user is taken to a status view
+
+        #When user clicks download link, file downloads through user's browser
+
+        #User can view conversion details or return to main menu
 
         self.fail('Finish the test!')
 

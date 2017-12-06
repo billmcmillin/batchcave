@@ -52,3 +52,6 @@ docs/_build/
 
 # Vim 
 *.swp
+
+# MarcEdit
+marcedit/*

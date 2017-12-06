@@ -11,19 +11,24 @@ services:
 
    # to make the database data persist, if you don't want to persist data remove this
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
-
+      - postgres-data:/var/lib/postgresql/data
   app:
-    build: .
+    build: . 
     restart: always
     # script to be run once container starts up
     # see below to know whats inside run_app.sh
     entrypoint: ./run_app.sh
     volumes:
       - ./batchcave:/code/batchcave
+      - bcfiles:/data
     depends_on:
       - db
     # connect system port 80 to 8000 to access Django without port
     ports:
       - "8000:8000"
     env_file: .env
+
+volumes:
+  postgres-data:
+  batchcave:
+  bcfiles:
