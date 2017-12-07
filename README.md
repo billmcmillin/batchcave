@@ -24,5 +24,8 @@ From project root:
 * docker attach won't work b/c start_app.sh is running the server. Instead, use
 ```sudo docker exec -it batchcave_app_1 bash```
 
+## Flush Database Contents
+in run_app.sh, prepend this:
+```cat <(echo "yes") - | python3 manage.py flush
 ## Sources
 * [https://docs.docker.com/compose/django/](https://docs.docker.com/compose/django/)

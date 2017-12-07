@@ -18,3 +18,12 @@ class batchEdits:
 #        x = utilities.MarcEditSaveToMRK(x)
 #        x = utilities.MarcEditMakeFile(x)
         return x
+
+    def ER_EAI_1st(self, x, name='ER-EAI-1st'):
+        s = 2
+        pass
+
+
+    def ER_OECD(self, x, name='ER-OECD'):
+        s = 2
+        pass
