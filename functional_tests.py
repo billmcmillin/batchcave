@@ -1,5 +1,6 @@
 from selenium import webdriver
 import unittest
+import inspect
 
 class NewVisitorTest(unittest.TestCase):
 
@@ -28,11 +29,12 @@ class NewVisitorTest(unittest.TestCase):
     def test_user_is_presented_menu_of_processes(self):
 
         self.browser.get('http://localhost:8000/converions/create')
-
         #User is presented with a list of processes to choose from
-        choice1 = self.browser.find_element_by_id('id_ER_EAI_2nd')
+        choices = self.browser.find_elements_by_xpath("/")
+        print(dir(choices))
+        print(choices)
         self.assertEqual(
-            choice1.text,
+            choices[0].text,
             'ER_EAI_2nd'
        )
 

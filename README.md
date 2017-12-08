@@ -13,6 +13,12 @@ Functional tests in functional_tests.py
 start server with ```sudo docker-compose up```
 run with ```python3 functional_tests.py```
 
+###Unit tests
+run with 
+```python3 manage.py test converter```
+* make sure DATABASE_HOST env variable is not set
+* file upload tests will only pass when run from inside container due to permissions
+
 ## Migrations
 ```python3 batchcave/manage.py makemigrations```
 

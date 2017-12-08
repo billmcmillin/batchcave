@@ -9,16 +9,18 @@ def home_page(request):
     return render(request, 'converter/home.html')
 
 def index(request):
-    return HttpResponse("you're looking at the index of conversion.")
+    return render(request, 'conversions/index.html')
 
 def create(request):
 
     if request.method == 'POST':
         form = ConversionForm(request.POST, request.FILES)
         if form.is_valid():
-            form.TimeExecuted = datetime.datetime.now()
             form.save()
-            return redirect('home')
+            return redirect('index')
+        else:
+            return redirect('conversions/error.html', {
+            'msg': 'There is an error with the submission. All conversions must have a name, a selected type, and a file uploaded.'})
     else:
         form = ConversionForm()
         return render(request, 'conversions/create.html', {
