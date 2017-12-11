@@ -1,7 +1,9 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-import time
+from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.support.ui import Select
+
+MAX_WAIT = 10
 
 class NewVisitorTest(LiveServerTestCase):
 
@@ -27,34 +29,37 @@ class NewVisitorTest(LiveServerTestCase):
         second_choice = self.browser.find_element_by_id('id_menu_indexConversion')
         self.assertIn('View Past Conversions', second_choice.text)
 
-    def test_user_is_presented_menu_of_processes(self):
 
-        self.browser.get(self.live_server_url + '/converions/create')
-        #User is presented with a list of processes to choose from
-        choices = self.browser.find_elements_by_xpath("/")
-        print(dir(choices))
-        print(choices)
-        self.assertEqual(
-            choices[0].text,
-            'ER_EAI_2nd'
-       )
+class NewConversionTest(LiveServerTestCase):
 
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+
+    def tearDown(self):
+        self.browser.quit()
+
+    #User is presented with a list of processes to choose from
+    def test_user_can_choose_type(self):
+        self.browser.get(self.live_server_url + '/conversions/create/')
+        response = self.browser.find_elements_by_tag_name('h1')
+        self.assertIn('BatchCave',response[0].text)
+        options = self.browser.find_elements_by_tag_name('option')
+        self.assertIn('ER_EAI_2nd',options[2].text)
+
+    def test_user_enters_conversion_info(self):
+        self.browser.get(self.live_server_url + '/conversions/create/')
+        select = Select(self.browser.find_element_by_tag_name("select"))
+        select.select_by_visible_text("ER_EAI_2nd")
         #User selects a process
-
-    def test_user_can_select_process(self):
-        pass
-        #self.browser.get('http://localhost:8000/conversions/create')
-
-        #User is taken to the process window
-
-        #header_text = self.browser.find_element_by_tag_name('h2').text
-        #self.assertIn('Begin New Conversion', header_text)
-
-        #User can select a process
-        #process_link = self.browser.find_element_by_tag_name('option').text
-        #self.assertIn('ER_EAI_2nd', process_link)
+        processBox = self.browser.find_element_by_tag_name("select")
+        processBox.send_keys('Firstiest conversion')
 
         #User is able to upload a file through dialog box
+        uploadBox = self.browser.find_element_by_id("id_Upload")
+        uploadBox.send_keys("~/TEST.mrc")
+
+        submitButton = self.browser.find_element_by_tag_name("form")
+        submitButton.submit()
 
         #File is processed and user is taken to a status view
 

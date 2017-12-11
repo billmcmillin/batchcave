@@ -2,6 +2,7 @@ from django.test import TestCase
 from converter.models import Conversion
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
+from pymarc import MARCREADER
 
 class HomePageTest(TestCase):
 
@@ -34,6 +35,11 @@ class NewConversionTest(TestCase):
             test_file = SimpleUploadedFile('testing_upload.txt', testMarc.read())
         return test_file
 
+    def get_bad_file(self):
+        with open('batchcave/converter/infiles/BADTEST.mrc', 'rb') as testMarc:
+            test_file = SimpleUploadedFile('testing_bad_upload.mrc', testMarc.read())
+        return test_file
+
     def test_only_saves_when_necessary(self):
         self.client.get('/conversions/create')
         self.assertEqual(Conversion.objects.count(), 0)
@@ -61,3 +67,7 @@ class NewConversionTest(TestCase):
         self.assertIn('First one', response1.content.decode())
         self.assertIn('Secondy one', response1.content.decode())
         self.assertIn('Thirdish one', response1.content.decode())
+
+    def test_only_marc_file_can_be_uploaded(self):
+        good_file = self.get_test_file()
+        bad_file = self.get_bad_file()
