@@ -1,8 +1,9 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
-import unittest
-import inspect
+from selenium.webdriver.common.keys import Keys
+import time
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -12,7 +13,7 @@ class NewVisitorTest(unittest.TestCase):
 
     def test_user_can_choose_from_main_menu(self):
         #User has batch records to convert, goes to batchcave homepage
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         #User is presented with basic info about the app
         self.assertIn('BatchCave', self.browser.title)
@@ -28,7 +29,7 @@ class NewVisitorTest(unittest.TestCase):
 
     def test_user_is_presented_menu_of_processes(self):
 
-        self.browser.get('http://localhost:8000/converions/create')
+        self.browser.get(self.live_server_url + '/converions/create')
         #User is presented with a list of processes to choose from
         choices = self.browser.find_elements_by_xpath("/")
         print(dir(choices))
@@ -66,5 +67,3 @@ class NewVisitorTest(unittest.TestCase):
 #User exits
 
 
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')

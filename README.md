@@ -19,6 +19,9 @@ run with
 * make sure DATABASE_HOST env variable is not set
 * file upload tests will only pass when run from inside container due to permissions
 
+###Functional Tests
+* use selenium, so these will not run inside the container
+
 ## Migrations
 ```python3 batchcave/manage.py makemigrations```
 

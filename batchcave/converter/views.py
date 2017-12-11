@@ -9,7 +9,8 @@ def home_page(request):
     return render(request, 'converter/home.html')
 
 def index(request):
-    return render(request, 'conversions/index.html')
+    Conversions = Conversion.objects.all()
+    return render(request, 'conversions/index.html', {'Conversions': Conversions})
 
 def create(request):
 

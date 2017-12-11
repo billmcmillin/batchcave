@@ -29,20 +29,35 @@ class ConversionModelTest(TestCase):
         pass
 
 class NewConversionTest(TestCase):
+    def get_test_file(self):
+        with open('batchcave/converter/infiles/TEST.mrc', 'rb') as testMarc:
+            test_file = SimpleUploadedFile('testing_upload.txt', testMarc.read())
+        return test_file
+
     def test_only_saves_when_necessary(self):
         self.client.get('/conversions/create')
         self.assertEqual(Conversion.objects.count(), 0)
 
     #NOTE: this will only work from inside the container
     def test_can_save_new_conversion(self):
-        with open('batchcave/converter/infiles/TEST.mrc', 'rb') as testMarc:
-            test_file = SimpleUploadedFile('testing_upload.txt', testMarc.read())
+        test_file = self.get_test_file()
         response = self.client.post('/conversions/create/', data={'Name':'First one','Type': 1, 'Upload': test_file})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Conversion.objects.count(), 1)
         new_item = Conversion.objects.first()
         self.assertEqual(new_item.Type, 1)
 
-        #self.assertEqual(response.status_code, 302)
-        #self.assertEqual(response['location'], 'conversions')
+    def test_redirects_after_post(self):
+        test_file = self.get_test_file()
+        response = self.client.post('/conversions/create/', data={'Name':'First one','Type': 1, 'Upload': test_file})
+        self.assertEqual(response['location'], '/conversions/')
 
+    def test_displays_all_conversions(self):
+        test_file = self.get_test_file()
+        self.client.post('/conversions/create/', data={'Name':'First one','Type': 1, 'Upload': test_file})
+        self.client.post('/conversions/create/',data={'Name':'Second one','Type': 1, 'Upload': test_file})
+        self.client.post('/conversions/create/', data={'Name':'Third one','Type': 3, 'Upload': test_file})
+        response1 = self.client.get('/conversions/')
+        self.assertIn('First one', response1.content.decode())
+        self.assertIn('Secondy one', response1.content.decode())
+        self.assertIn('Thirdish one', response1.content.decode())
