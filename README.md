@@ -8,10 +8,8 @@ All other settings are defined in Dockerfile and docker-compose.yml.
 
 * Currently only the dev environment is configured. 
 
-## Testing
-Functional tests in functional_tests.py 
+# Testing
 start server with ```sudo docker-compose up```
-run with ```python3 functional_tests.py```
 
 ###Unit tests
 run with 
@@ -21,6 +19,8 @@ run with
 
 ###Functional Tests
 * use selenium, so these will not run inside the container
+* run with ```python3 manage.py test functional_tests```
+* in batchcaves/functional_tests/tests.py
 
 ## Migrations
 ```python3 batchcave/manage.py makemigrations```

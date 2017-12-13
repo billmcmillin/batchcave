@@ -13,8 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import include, url
 from converter import views
+from converter import urls as conv_urls
 
 urlpatterns = [
     # home page
@@ -27,4 +28,5 @@ urlpatterns = [
     url(r'^conversions/(?P<conversion_id>[0-9]+)/$', views.detail, name='detail'),
     # ex: /conversions/5/results/
     url(r'^conversions/(?P<conversion_id>[0-9]+)/results/$', views.results, name='results'),
+    url(r'^converter/', include(conv_urls)),
 ]

@@ -1,10 +1,21 @@
 from .base import FunctionalTest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
+from unittest import skip
 
 class NewVisitorTest(FunctionalTest):
 
+    def test_layout_and_styling(self):
+        self.browser.get(self.live_server_url + '/conversions/create')
+        self.browser.set_window_size(1024, 768)
+
+        inputbox = self.browser.find_element_by_id('id_Name')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2, 512,
+            delta=30
+        )
+
+    @skip
     def test_user_can_choose_from_main_menu(self):
         #User has batch records to convert, goes to batchcave homepage
         self.browser.get(self.live_server_url)

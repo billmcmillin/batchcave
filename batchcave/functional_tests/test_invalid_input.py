@@ -6,7 +6,6 @@ from unittest import skip
 from selenium.webdriver.common.keys import Keys
 
 class Invalid_Input_Test(FunctionalTest):
-    @skip
     def test_cannot_add_incomplete_conversion(self):
         #user enters an incomplete item
         self.browser.get(self.live_server_url + '/conversions/create/')
@@ -15,8 +14,11 @@ class Invalid_Input_Test(FunctionalTest):
 
         submitButton = self.browser.find_element_by_tag_name("form")
         submitButton.submit()
-        self.fail('finish')
 
+        #user submits and is redirected to error page
+        self.wait_for(lambda: self.assertEqual(
+            self.browser.find_element_by_css_selector('.has_error').text, "Type must not be none"
+        ))
 
         #When user clicks download link, file downloads through user's browser
 

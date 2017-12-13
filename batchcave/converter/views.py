@@ -20,7 +20,7 @@ def create(request):
             form.save()
             return redirect('index')
         else:
-            return redirect('conversions/error.html', {
+            return redirect('/converter/templates/conversions/error.html', {
             'msg': 'There is an error with the submission. All conversions must have a name, a selected type, and a file uploaded.'})
     else:
         form = ConversionForm()
