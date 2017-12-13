@@ -36,5 +36,10 @@ From project root:
 ## Flush Database Contents
 in run_app.sh, prepend this:
 ```cat <(echo "yes") - | python3 manage.py flush
+
+## Deployment
+* collect all static files into root static dir with 
+```python3 batchcave/manage.py collectstatic```
+
 ## Sources
 * [https://docs.docker.com/compose/django/](https://docs.docker.com/compose/django/)

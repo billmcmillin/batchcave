@@ -46,12 +46,14 @@ coverage.xml
 *.log
 *.pot
 *.env
+./static
 
 # Sphinx documentation
 docs/_build/
 
 # Vim 
 *swp
+*.sw.*
 
 # MarcEdit
 marcedit/*
