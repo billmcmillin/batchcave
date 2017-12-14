@@ -3,6 +3,7 @@ from converter.models import Conversion
 from converter.modelsdir import batchEdits
 from converter.forms import ConversionForm
 import datetime
+from django.core.exceptions import ValidationError
 
 # Create your views here.
 def home_page(request):
@@ -12,19 +13,16 @@ def index(request):
     Conversions = Conversion.objects.all()
     return render(request, 'conversions/index.html', {'Conversions': Conversions})
 
-def err(request, msg):
-    return render(request, 'conversions/error.html', {'msg': msg})
-
 def create(request):
 
     if request.method == 'POST':
         form = ConversionForm(request.POST, request.FILES)
-        if form.is_valid():
+        try:
+            form.is_valid()
             form.save()
             return redirect('index')
-        else:
-            return redirect('/conversions/err/', {
-            'msg': 'There is an error with the submission. All conversions must have a name, a selected type, and a file uploaded.'})
+        except Exception as e:
+            return render(request, 'conversions/create.html', {"error": e})
     else:
         form = ConversionForm()
         return render(request, 'conversions/create.html', {
