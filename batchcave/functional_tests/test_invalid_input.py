@@ -17,8 +17,7 @@ class Invalid_Input_Test(FunctionalTest):
 
         #user submits and is redirected to error page
         self.wait_for(lambda: self.assertEqual(
-            self.browser.find_element_by_css_selector('.has_error').text, "Type must not be none"
-        ))
+            self.browser.find_element_by_css_selector('.has_error').text, "Type must not be none"))
 
         #When user clicks download link, file downloads through user's browser
 

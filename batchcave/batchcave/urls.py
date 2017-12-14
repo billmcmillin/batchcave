@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^conversions/(?P<conversion_id>[0-9]+)/$', views.detail, name='detail'),
     # ex: /conversions/5/results/
     url(r'^conversions/(?P<conversion_id>[0-9]+)/results/$', views.results, name='results'),
+     url(r'^conversions/err/$', views.err, name='err'),
     url(r'^converter/', include(conv_urls)),
 ]
