@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from pymarc import MARCReader
 import pymarc
-import time
+from django.utils.html import escape
 
 class HomePageTest(TestCase):
 
@@ -26,5 +26,5 @@ class HomePageTest(TestCase):
     def test_validation_errors_are_sent_to_create_template(self):
         test_file = self.get_test_file()
         response = self.client.post('/conversions/create/', data={'Name':'','Type': 1, 'Upload': test_file})
-        expected_error = "The Conversion could not be created because the data didn&#39;t validate."
+        expected_error = escape("The Conversion could not be created because the data didn't validate.")
         self.assertContains(response, expected_error)
