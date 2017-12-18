@@ -23,7 +23,7 @@ class HomePageTest(TestCase):
 
         self.assertTemplateUsed(response, 'converter/home.html')
 
-    def test_validation_errors_are_sent_to_create_template(self):
+    def test_validation_errors_are_sent_to_base_template(self):
         test_file = self.get_test_file()
         response = self.client.post('/conversions/create/', data={'Name':'','Type': 1, 'Upload': test_file})
         expected_error = escape("The Conversion could not be created because the data didn't validate.")
