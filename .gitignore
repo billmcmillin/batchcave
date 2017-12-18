@@ -52,8 +52,7 @@ coverage.xml
 docs/_build/
 
 # Vim 
-*swp
-*.sw*
+.*.sw*
 
 # MarcEdit
 marcedit/*
