@@ -4,11 +4,6 @@
  <h2>Begin New Conversion</h2>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-				{% if error %}
-					<div class="form-group has-error">
-						<span class="help-block">{{ error }}</span>
-					</div>
-				{% endif %}
     {{ form.as_p }}
     <button type="submit">Upload</button>
   </form>
