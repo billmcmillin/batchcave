@@ -18,16 +18,27 @@ class NewConversionTest(FunctionalTest):
         select = Select(self.browser.find_element_by_tag_name("select"))
         select.select_by_visible_text("ER_EAI_2nd")
         #User selects a process
-        processBox = self.browser.find_element_by_tag_name("select")
-        processBox.send_keys('Firstiest conversion')
+        nameBox = self.browser.find_element_by_css_selector("input#id_Name")
+        nameBox.send_keys('Firstiest conversion')
 
         #User is able to upload a file through dialog box
         uploadBox = self.browser.find_element_by_id("id_Upload")
-        uploadBox.send_keys("~/TEST.mrc")
+        uploadBox.send_keys("/home/mcmillwh/TEST.mrc")
 
         submitButton = self.browser.find_element_by_tag_name("form")
         submitButton.submit()
 
-        #File is processed and user is taken to a status view
+        #File is processed and user is taken to index view
+        self.wait_for(lambda: self.assertEqual(
+            self.browser.find_element_by_css_selector('h2').text, "Completed Conversions"
+        ))
+
+        #new conversion is listed
+        self.wait_for(lambda: self.assertIn(
+            "Firstiest conversion", self.browser.find_element_by_css_selector('tbody').text
+        ))
+
+        #link to uploaded file is also there
+        number = self.browser.find_element_by_link_text("Firstiest conversion").id
 
         #User can only submit a complete form

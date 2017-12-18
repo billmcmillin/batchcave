@@ -5,7 +5,8 @@
     <h2>Completed Conversions</h2>
     <table>
    {% for item in Conversions %}
-        <tr><td>{{ forloop.counter }}: {{ item.Name }}</td></tr>
+        <tr><td>{{ forloop.counter }}: {{ item.Name }}</td>
+            <td><a href="#">{{ item.Name }} </a></tr>
     {% endfor %}
     </table>
 {% endblock %}
