@@ -3,7 +3,7 @@ from converter.models import Conversion
 from converter.modelsdir import batchEdits
 from converter.forms import ConversionForm
 import datetime
-from django.core.exceptions import ValidationError
+from django.http import HttpResponse
 
 # Create your views here.
 def home_page(request):
@@ -17,21 +17,30 @@ def create(request):
 
     if request.method == 'POST':
         form = ConversionForm(request.POST, request.FILES)
-        try:
-            form.is_valid()
+        if form.is_valid():
             form.save()
             return redirect('index')
-        except Exception as e:
-            return render(request, 'conversions/create.html', {"error": e})
+        else:
+            return redirect('error')
     else:
         form = ConversionForm()
         return render(request, 'conversions/create.html', {
         'form': form
     })
 
+def error(request):
+    return render(request, 'conversions/error.html', {
+        'msg': 'There is an error with the submission. All conversions must have a name, a selected type, and a file uploaded.'})
 
 def detail(request, conversion_id):
     return HttpResponse("you're looking at the details of conversion %s." % conversion_id)
+
+def download(request, conversion_id):
+    convo = Conversion.objects.get(pk=conversion_id)
+    response = HttpResponse(convo.Output)
+    response['content_type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename=%s' % convo.Name
+    return response
 
 def results(request, conversion_id):
     return HttpResponse("you're looking at the results of conversion %s." % conversion_id)

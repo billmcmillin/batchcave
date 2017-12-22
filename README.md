@@ -21,6 +21,7 @@ run with
 * use selenium, so these will not run inside the container
 * run with ```python3 manage.py test functional_tests```
 * in batchcaves/functional_tests/tests.py
+* host machine running FTs must have directory /data writable by user running browser
 
 ## Migrations
 ```python3 batchcave/manage.py makemigrations```

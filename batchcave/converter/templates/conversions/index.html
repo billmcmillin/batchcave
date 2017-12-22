@@ -1,11 +1,14 @@
-
 {% extends 'base.html' %}
 
 {% block content %}
     <h2>Completed Conversions</h2>
     <table>
    {% for item in Conversions %}
-        <tr><td>{{ forloop.counter }}: {{ item.Name }}</td></tr>
+        <tr><td>{{ forloop.counter }}: {{ item.Name }}</td>
+            <td><a href="{{ item.Upload }}">{{ item.Upload }}</a></td>
+            <td><a href="/download/{{ item.pk }}">Download Result</a></td>
+            <td>{{ item.RecordsIn }}</td>
+        </tr>
     {% endfor %}
     </table>
 {% endblock %}
