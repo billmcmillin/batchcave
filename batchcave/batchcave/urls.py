@@ -29,4 +29,6 @@ urlpatterns = [
     # ex: /conversions/5/results/
     url(r'^conversions/(?P<conversion_id>[0-9]+)/results/$', views.results, name='results'),
     url(r'^converter/', include(conv_urls)),
+    url(r'^conversions/error/$', views.error, name='error'),
+    url(r'^download/(?P<conversion_id>[0-9]+)/$', views.download, name='download'),
 ]
