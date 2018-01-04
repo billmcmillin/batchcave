@@ -9,4 +9,12 @@ RUN echo "deb http://download.mono-project.com/repo/debian jessie main" | tee /e
 RUN apt-get update
 RUN cat /etc/*-release
 RUN apt-get install mono-complete -y
+RUN apt remove firefox
+RUN apt-get install firefox-esr xvfb -y
+RUN pip install selenium pyvirtualdisplay
+#ADD xvfb.init /etc/init.d/xvfb
+#RUN chmod +x /etc/init.d/xvfb
+#RUN update-rc.d xvfb defaults
+#CMD (service xvfb start; export DISPLAY=10;)
 COPY . /code/
+RUN cp geckodriver /usr/local/bin/

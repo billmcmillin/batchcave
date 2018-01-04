@@ -1,20 +1,20 @@
 import os
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver import FirefoxOptions
 from unittest import skip
 import time
 
 MAX_WAIT = 10
 
-class FunctionalTest(StaticLiveServerTestCase):
+class FunctionalTest(LiveServerTestCase):
 
     def setUp(self):
-        self.browser = webdriver.Firefox()
-        staging_server = os.environ.get('STAGING_SERVER')
-        if staging_server:
-            self.live_server_url = 'http://' + staging_server
+        opts = FirefoxOptions()
+        opts.add_argument("--headless")
+        self.browser = webdriver.Firefox(firefox_options=opts)
 
     def tearDown(self):
         self.browser.quit()
